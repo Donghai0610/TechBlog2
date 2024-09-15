@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using TechBlog.API;
 using TechBlog.Core.Domain.Identity;
+using TechBlog.Core.SeedWork;
 using TechBlog.Data;
+using TechBlog.Data.SeedWork;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -10,6 +14,7 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<TechBlogContext>(options =>
 options.UseSqlServer(connectionString));
+
 builder.Services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = false)
 .AddEntityFrameworkStores<TechBlogContext>();
 
@@ -37,7 +42,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 
 
-//c
+//ADD Services to the container
+builder.Services.AddScoped(typeof(IRepository<,>), typeof(RepositoryBase<,>));
+builder.Services.AddScoped<IUnitOfWork, UnitOFWork>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -58,5 +65,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+//
+app.MigrateDatabase();
 
 app.Run();

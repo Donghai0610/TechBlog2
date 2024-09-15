@@ -37,7 +37,7 @@ namespace TechBlog.Data
 
 
         }
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+      /*  public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added|| e.State== EntityState.Modified
             );
@@ -48,14 +48,14 @@ namespace TechBlog.Data
                 {
                     dateCreateProp.SetValue(entityEntry.Entity, DateTime.Now);
                 }
-                var modifieDateProp = entityEntry.Entity.GetType().GetProperty("ModifiedDate");
+              *//*  var modifieDateProp = entityEntry.Entity.GetType().GetProperty("ModifiedDate");
                 if (entityEntry.State == EntityState.Modified && modifieDateProp != null)
                 {
                     modifieDateProp.SetValue(entityEntry.Entity, DateTime.Now);
-                }
+                }*//*
             }
             return base.SaveChangesAsync( cancellationToken);
-        }
+        }*/
 
     }
 }
